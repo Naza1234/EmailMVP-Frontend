@@ -219,31 +219,46 @@ function getEmailContent(data,headers){
  
  }
  
- 
- function writeEmailToServer(params){
+ let numRequests = 0;
+
+function writeEmailToServer(params) {
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-          },
-         body: JSON.stringify(params),
-      };
-      var errorIs=false
-  
-      fetch(`${apiUrl}/userEmail/user-emails`, requestOptions)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-   loadEmails(userID)
-      })
-      .catch((error) => {
-        // Handle any errors
-        console.error('Error:', error);
-        document.getElementsByClassName("loading_data")[0].classList.add("hid");
-      });
+        },
+        body: JSON.stringify(params),
+    };
 
- }
+    // Increment the number of ongoing requests
+    numRequests++;
+
+    fetch(`${apiUrl}/userEmail/user-emails`, requestOptions)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            // Decrement the number of ongoing requests
+            numRequests--;
+
+            // If no more ongoing requests, call loadEmails(userID)
+            if (numRequests === 0) {
+                loadEmails(userID);
+            }
+        })
+        .catch((error) => {
+            // Handle any errors
+            console.error('Error:', error);
+            document.getElementsByClassName("loading_data")[0].classList.add("hid");
+            // Decrement the number of ongoing requests
+            numRequests--;
+            // If no more ongoing requests, call loadEmails(userID)
+            if (numRequests === 0) {
+                loadEmails(userID);
+            }
+        });
+}
+
 
  loadEmails(userID)
 
@@ -263,15 +278,14 @@ function loadEmails(userID){
             populateUserEmail(element) 
             emailData.push(element)
         }
-        loadPlay()
+        playTime()
+        loadPlay() 
       })
       .catch((error) => {
         // Handle any errors
         console.error('Error:', error);
 
       });
-
-
 }
 
 
@@ -317,7 +331,7 @@ function populateUserEmail(data){
 </li>
 `
     container.insertAdjacentHTML("beforeend",html)
-  
+    // loadPlay()
 }
 
 
@@ -506,9 +520,9 @@ async function playTime() {
             
             const generatedSummary = await generateSummary(summary);
             const audioUrl = await convertTextToAudio(generatedSummary.choices[0].message.content.replace(/"/g, ''));
-            document.getElementsByClassName("loading_data")[0].classList.remove("hid")
             populateCont(name,generatedSummary.choices[0].message.content.replace(/"/g, ''),"no id for this as it is selected by time",audioUrl)
             
+            document.getElementsByClassName("loading_data")[0].classList.remove("hid")
     });
 }
 
