@@ -306,7 +306,7 @@ function populateUserEmail(data){
 
 function generateSummary(description) {
     // Your ChatGPT API endpoint
-    const apiUrl = `${apiUrl}/summary/generate-summary`;
+    const apiUrl = `https://emailmvpserver.onrender.com/summary/generate-summary`;
 
    const params = {
     description : description
