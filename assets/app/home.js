@@ -36,7 +36,7 @@ function loadEmail(data){
 
 // Define your client ID and OAuth redirect URI
 const clientId = '39981925808-vjpe9e1602ced5gftdnmdn181dbnroam.apps.googleusercontent.com';
-const redirectUri = 'http://127.0.0.1:5501/pages/home.html';
+const redirectUri = 'https://www.beamingbonsai.com/pages/home.html';
 
 // Define the scope for accessing Gmail
 const scope = 'https://www.googleapis.com/auth/gmail.readonly';
@@ -71,7 +71,7 @@ if (code) {
     // Do something with the extracted code
     const clientId = '39981925808-vjpe9e1602ced5gftdnmdn181dbnroam.apps.googleusercontent.com';
     const clientSecret = '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';
-    const redirectUri = 'http://127.0.0.1:5501/pages/home.html';
+    const redirectUri = 'https://www.beamingbonsai.com/pages/home.html';
     const authorizationCode = code;
     
     const tokenEndpoint = 'https://oauth2.googleapis.com/token';

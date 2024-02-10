@@ -14,7 +14,7 @@ function singingWithGoogle(){
 
     let params={
         "client_id":"837160506487-9lera7p8rv5dgs48r55u191f8h79sj6s.apps.googleusercontent.com",
-        "redirect_uri":"http://127.0.0.1:5501",
+        "redirect_uri":"https://www.beamingbonsai.com",
         "response_type":"token",
         "scope":"https://www.googleapis.com/auth/userinfo.profile",
         "include_granted_scopes":"true",
