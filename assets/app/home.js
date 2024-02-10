@@ -119,7 +119,7 @@ if (code) {
 
 function updateUser(params) {
     document.getElementsByClassName("loading_data")[0].classList.remove("hid");
-    document.getElementsByClassName("loading_data")[0].classList.remove("hid");
+    // document.getElementsByClassName("loading_data")[0].classList.remove("hid");
     const accessToken = params.userAutcode;
 
     // Define the Gmail API endpoint for searching messages
@@ -152,6 +152,7 @@ function updateUser(params) {
     })
     .catch(error => {
         console.error('Error:', error);
+        document.getElementsByClassName("loading_data")[0].classList.add("hid");
     });
 }
 
@@ -239,7 +240,7 @@ function getEmailContent(data,headers){
       .catch((error) => {
         // Handle any errors
         console.error('Error:', error);
-
+        document.getElementsByClassName("loading_data")[0].classList.add("hid");
       });
 
  }
@@ -274,7 +275,7 @@ function loadEmails(userID){
 
 
 function populateUserEmail(data){
-    document.getElementsByClassName("loading_data")[0].classList.add("hid")
+    // document.getElementsByClassName("loading_data")[0].classList.add("hid")
     document.getElementsByClassName("loading_data")[0].classList.add("hid")
     var container=document.getElementsByClassName("emailContainer")[0]
     var html=`
