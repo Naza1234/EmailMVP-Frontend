@@ -263,13 +263,15 @@ function loadEmails(userID){
             populateUserEmail(element) 
             emailData.push(element)
         }
-        playTime()
+        loadPlay()
       })
       .catch((error) => {
         // Handle any errors
         console.error('Error:', error);
 
       });
+
+
 }
 
 
@@ -315,7 +317,7 @@ function populateUserEmail(data){
 </li>
 `
     container.insertAdjacentHTML("beforeend",html)
-    loadPlay()
+  
 }
 
 
@@ -497,16 +499,16 @@ async function playTime() {
         var name = "email Pod Cast";
         var summary = "";
         
-       
-            for (let i = 0; i < emailData.length; i++) {
+        for (let i = 0; i < emailData.length; i++) {
                 const element = emailData[i];
                 summary += element.message;
             }
             
             const generatedSummary = await generateSummary(summary);
             const audioUrl = await convertTextToAudio(generatedSummary.choices[0].message.content.replace(/"/g, ''));
+            document.getElementsByClassName("loading_data")[0].classList.remove("hid")
             populateCont(name,generatedSummary.choices[0].message.content.replace(/"/g, ''),"no id for this as it is selected by time",audioUrl)
-       
+            
     });
 }
 
