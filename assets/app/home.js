@@ -117,26 +117,25 @@ if (code) {
 
 
 
-
-function updateUser(params){
-     document.getElementsByClassName("loading_data")[0].classList.remove("hid")
-    document.getElementsByClassName("loading_data")[0].classList.remove("hid")
+function updateUser(params) {
+    document.getElementsByClassName("loading_data")[0].classList.remove("hid");
+    document.getElementsByClassName("loading_data")[0].classList.remove("hid");
     const accessToken = params.userAutcode;
-    
+
     // Define the Gmail API endpoint for searching messages
     const gmailApiEndpoint = 'https://gmail.googleapis.com/gmail/v1/users/me/messages';
-    
-    // Define the Gmail search query to find messages marked as "unsubscribed"
-    const gmailSearchQuery = 'unsubscribed';
+
+    // Define the Gmail search query to find messages marked as "unsubscribed" and received within the last 7 days
+    const gmailSearchQuery = `unsubscribe after:${getFormattedDate(new Date(new Date() - 7 * 24 * 60 * 60 * 1000))}`;
 
     // Construct the request URL with the search query
     const requestUrl = `${gmailApiEndpoint}?q=${encodeURIComponent(gmailSearchQuery)}`;
-    
+
     // Define the request headers, including the Authorization header with the access token
     const headers = {
         'Authorization': `Bearer ${accessToken}`,
     };
-    
+
     // Make a fetch request to the Gmail API
     fetch(requestUrl, {
         method: 'GET',
@@ -149,13 +148,27 @@ function updateUser(params){
         return response.json();
     })
     .then((data) => {
-        getEmailContent(data.messages,headers)
-
+        getEmailContent(data.messages, headers);
     })
     .catch(error => {
         console.error('Error:', error);
     });
-    
+}
+
+// Function to get formatted date (YYYY/MM/DD)
+function getFormattedDate(date) {
+    const year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    if (month < 10) {
+        month = '0' + month;
+    }
+    if (day < 10) {
+        day = '0' + day;
+    }
+
+    return `${year}/${month}/${day}`;
 }
 
 
@@ -233,7 +246,7 @@ function getEmailContent(data,headers){
 
  loadEmails(userID)
 
- var date=[]
+
  var emailData=[]
 function loadEmails(userID){
     fetch(`${apiUrl}/userEmail/user-emails/${userID}`)
@@ -242,12 +255,11 @@ function loadEmails(userID){
       })
       .then((data) => {
         data.reverse() 
-        setPeriods(data,"Set_Starting_Date")
+        
         document.getElementsByClassName("emailContainer")[0].innerHTML=""
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
             populateUserEmail(element) 
-            date.push(element.Date)
             emailData.push(element)
         }
         playTime()
@@ -463,38 +475,7 @@ function toggleDetails(){
 
 
 
-function setPeriods(data,identifier){
-    // document.querySelector(`#${identifier}`).innerHTML=""
-   
-     for (let i = 0; i < data.length; i++) {
-        const element = data[i];
-        var container=document.querySelector(`#${identifier}`)
-        var html=`
-        <option value="${element.Date ? element.Date : element}">${element.Date ? element.Date : element}</option>
-        `
-        container.insertAdjacentHTML("beforeend",html)
-     }
-}
 
-setEndTime()
-
-
-function setEndTime(){
-    const selectionInput = document.getElementById('Set_Starting_Date');
-
-    // Add event listener for 'change' event
-    selectionInput.addEventListener('change',(e)=>{
-        // Log the selected value when it changes
-        var value=e.target.value
-        const referenceDate = new Date(value);
-        const datesGreaterThanReference = date.filter(dateStr => {
-            const currentDate = new Date(dateStr);
-            return currentDate > referenceDate;
-        });
-        document.getElementById('Set_Date_To_Stop').innerHTML=""
-        setPeriods(datesGreaterThanReference,"Set_Date_To_Stop")
-    });
-}
 
 
 function isValidDateFormat(text) {
@@ -512,33 +493,19 @@ function isValidDateFormat(text) {
 
 async function playTime() {
     document.getElementsByClassName("time_play")[0].addEventListener("click", async () => {
-        var TimeDuration = document.getElementsByTagName("select");
-        var StartingDate = TimeDuration[0].value;
-        var EndingDate = TimeDuration[1].value;
         var name = "email Pod Cast";
         var summary = "";
         
-        if (isValidDateFormat(EndingDate)) {
-            document.getElementsByClassName("loading_data")[0].classList.remove("hid")
-            var startDate = new Date(StartingDate);
-            var endDate = new Date(EndingDate);
-            
-            const filteredData = emailData.filter(item => {
-                const itemDate = new Date(item.Date);
-                return itemDate >= startDate && itemDate <= endDate;
-            });
-            
-            for (let i = 0; i < filteredData.length; i++) {
-                const element = filteredData[i];
+       
+            for (let i = 0; i < emailData.length; i++) {
+                const element = emailData[i];
                 summary += element.message;
             }
             
             const generatedSummary = await generateSummary(summary);
             const audioUrl = await convertTextToAudio(generatedSummary.choices[0].message.content.replace(/"/g, ''));
             populateCont(name,generatedSummary.choices[0].message.content.replace(/"/g, ''),"no id for this as it is selected by time",audioUrl)
-        } else {
-            // Handle invalid date format
-        }
+       
     });
 }
 
