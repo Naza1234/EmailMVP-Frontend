@@ -306,32 +306,18 @@ function populateUserEmail(data){
 
 function generateSummary(description) {
     // Your ChatGPT API endpoint
-    const apiUrl = 'https://api.openai.com/v1/chat/completions';
+    const apiUrl = `${apiUrl}/summary/generate-summary`;
 
-    // Your API key for authorization
-    const apiKey = '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';
-
+   const params = {
+    description : description
+   }
     // Define the request parameters
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
         }, 
-        body: JSON.stringify({
-            "model": "gpt-3.5-turbo",
-            "messages": [
-                {"role": "system", "content": "You are the host of a podcast."},
-                {"role": "user", "content": `Please provide a detailed summary of the content in the following email newsletters: ${description}.
-                 In your introduction, mention the number of newsletters your podcast is based on. Summarize the most interesting points, 
-                 providing an engaging and comprehensive overview. Include additional context or research if available. Ensure that the summary is 
-                 thorough and meets a minimum of 5000 characters. The transcript should only include what the host would say.`}
-              
-            ],
-            "temperature": 0.7,
-            "max_tokens": 5000
-          }
-          )
+        body: JSON.stringify(params)
     };
 
     // Send the request to the ChatGPT API
