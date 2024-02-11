@@ -271,7 +271,23 @@ function loadEmails(userID){
       })
       .then((data) => {
         data.reverse() 
-        
+          // Assuming emailData is your array of email objects
+
+// Sort the array based on the Date property
+       data.sort((a, b) => {
+           // Convert the date strings to Date objects
+           const dateA = new Date(a.Date);
+           const dateB = new Date(b.Date);
+       
+           // Compare the dates
+           // If dateA is greater than dateB, put dateA before dateB (earlier date comes first)
+           // If dateA is less than dateB, put dateB before dateA (later date comes first)
+           return dateB - dateA;
+       });
+
+// Now emailData is sorted from newest to oldest based on the Date property
+
+
         document.getElementsByClassName("emailContainer")[0].innerHTML=""
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
@@ -512,9 +528,25 @@ async function playTime() {
     document.getElementsByClassName("time_play")[0].addEventListener("click", async () => {
         var name = "email Pod Cast";
         var summary = "";
-        
-        for (let i = 0; i < emailData.length; i++) {
-                const element = emailData[i];
+                        // Assuming emailData is your array of email objects
+                        document.getElementsByClassName("loading_data")[0].classList.remove("hid")
+
+           // Sort the array based on the Date property
+          emailData.sort((a, b) => {
+              // Convert the date strings to Date objects
+              const dateA = new Date(a.Date);
+              const dateB = new Date(b.Date);
+
+              // Compare the dates
+              // If dateA is greater than dateB, put dateA before dateB (earlier date comes first)
+              // If dateA is less than dateB, put dateB before dateA (later date comes first)
+              return dateB - dateA;
+          });
+
+
+          const mostRecentEmails = emailData.slice(0, 5);
+        for (let i = 0; i < mostRecentEmails.length; i++) {
+                const element = mostRecentEmails[i];
                 summary += element.message;
             }
             
@@ -522,7 +554,6 @@ async function playTime() {
             const audioUrl = await convertTextToAudio(generatedSummary.choices[0].message.content.replace(/"/g, ''));
             populateCont(name,generatedSummary.choices[0].message.content.replace(/"/g, ''),"no id for this as it is selected by time",audioUrl)
             
-            document.getElementsByClassName("loading_data")[0].classList.remove("hid")
     });
 }
 
