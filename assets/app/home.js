@@ -436,6 +436,8 @@ async function playSelected() {
         for (let i = 0; i < emails.length; i++) {
             const element = emails[i];
             summary += element.getElementsByClassName("hid")[1].innerHTML;
+            element.classList.remove("selected")
+            document.getElementsByClassName("number_of_selected")[0].innerHTML =0
         }
 
         const generatedSummary = await generateSummary(summary);
@@ -472,7 +474,7 @@ function populateCont(name,detail,id,audioUrl){
    <div class="link">
       <h1>${id === "no id for this as it is selected by time"?id:winUrl+"/a_page_detail.html?r="+id}</h1>
       <div class="copy">
-      <a href="${audioUrl}" download>
+      <a href="${audioUrl}" download="email podcast.mp3">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
           <path d="M16.5002 18.25H14.9902C14.5802 18.25 14.2402 17.91 14.2402 17.5C14.2402 17.09 14.5802 16.75 14.9902 16.75H16.5002C19.1202 16.75 21.2502 14.62 21.2502 12C21.2502 9.38 19.1202 7.25 16.5002 7.25H15.0002C14.5902 7.25 14.2502 6.91 14.2502 6.5C14.2502 6.09 14.5802 5.75 15.0002 5.75H16.5002C19.9502 5.75 22.7502 8.55 22.7502 12C22.7502 15.45 19.9502 18.25 16.5002 18.25Z" fill="white"/>
           <path d="M9 18.25H7.5C4.05 18.25 1.25 15.45 1.25 12C1.25 8.55 4.05 5.75 7.5 5.75H9C9.41 5.75 9.75 6.09 9.75 6.5C9.75 6.91 9.41 7.25 9 7.25H7.5C4.88 7.25 2.75 9.38 2.75 12C2.75 14.62 4.88 16.75 7.5 16.75H9C9.41 16.75 9.75 17.09 9.75 17.5C9.75 17.91 9.41 18.25 9 18.25Z" fill="white"/>
