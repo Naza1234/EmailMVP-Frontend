@@ -436,6 +436,8 @@ async function playSelected() {
             summary += element.getElementsByClassName("hid")[1].innerHTML;
             element.classList.remove("selected")
             document.getElementsByClassName("number_of_selected")[0].innerHTML =0
+            document.getElementsByClassName("popup_play")[0].classList.remove("popup_play_out");
+
         }
 
         const generatedSummary = await generateSummary(summary);
@@ -501,7 +503,6 @@ function toggleDetails(){
         const button = buttons[i];
         button.addEventListener("click",(e) => {
             document.getElementsByTagName("body")[0].classList.toggle("body_show_all")
-            document.getElementsByClassName("popup_play")[0].classList.remove("popup_play_out");
         });
     }
 }
