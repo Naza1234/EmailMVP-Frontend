@@ -295,7 +295,6 @@ function loadEmails(userID){
             emailData.push(element)
         }
         playTime()
-        loadPlay() 
       })
       .catch((error) => {
         // Handle any errors
@@ -311,7 +310,7 @@ function populateUserEmail(data){
     document.getElementsByClassName("loading_data")[0].classList.add("hid")
     var container=document.getElementsByClassName("emailContainer")[0]
     var html=`
-    <li>
+    <li class="email">
     <p>
     ${data.Date}
   </p>
@@ -319,22 +318,7 @@ function populateUserEmail(data){
     <h1 class="hid">${data.message}</h1>
     <h1 class="name">${data.title}</h1>
    <div>
-          <div class="svg-body Load_play">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M7.87 21.28C7.08 21.28 6.33 21.09 5.67 20.71C4.11 19.81 3.25 17.98 3.25 15.57V8.43999C3.25 6.01999 4.11 4.19999 5.67 3.29999C7.23 2.39999 9.24 2.56999 11.34 3.77999L17.51 7.33999C19.6 8.54999 20.76 10.21 20.76 12.01C20.76 13.81 19.61 15.47 17.51 16.68L11.34 20.24C10.13 20.93 8.95 21.28 7.87 21.28ZM7.87 4.21999C7.33 4.21999 6.85 4.33999 6.42 4.58999C5.34 5.20999 4.75 6.57999 4.75 8.43999V15.56C4.75 17.42 5.34 18.78 6.42 19.41C7.5 20.04 8.98 19.86 10.59 18.93L16.76 15.37C18.37 14.44 19.26 13.25 19.26 12C19.26 10.75 18.37 9.55999 16.76 8.62999L10.59 5.06999C9.61 4.50999 8.69 4.21999 7.87 4.21999Z" fill="#292D32"/>
-             </svg>
-
-          </div>                                      
-          <div class="svg-body see_foll_content">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 22.75H9C3.57 22.75 1.25 20.43 1.25 15V9C1.25 3.57 3.57 1.25 9 1.25H15C20.43 1.25 22.75 3.57 22.75 9V15C22.75 20.43 20.43 22.75 15 22.75ZM9 2.75C4.39 2.75 2.75 4.39 2.75 9V15C2.75 19.61 4.39 21.25 9 21.25H15C19.61 21.25 21.25 19.61 21.25 15V9C21.25 4.39 19.61 2.75 15 2.75H9Z" fill="#292D32"/>
-              <path d="M5.99994 18.75C5.80994 18.75 5.61994 18.68 5.46994 18.53C5.17994 18.24 5.17994 17.76 5.46994 17.47L17.4699 5.47C17.7599 5.18 18.2399 5.18 18.5299 5.47C18.8199 5.76 18.8199 6.24 18.5299 6.53L6.52994 18.53C6.37994 18.68 6.18994 18.75 5.99994 18.75Z" fill="#292D32"/>
-              <path d="M18 10.75C17.59 10.75 17.25 10.41 17.25 10V6.75H14C13.59 6.75 13.25 6.41 13.25 6C13.25 5.59 13.59 5.25 14 5.25H18C18.41 5.25 18.75 5.59 18.75 6V10C18.75 10.41 18.41 10.75 18 10.75Z" fill="#292D32"/>
-              <path d="M10 18.75H6C5.59 18.75 5.25 18.41 5.25 18V14C5.25 13.59 5.59 13.25 6 13.25C6.41 13.25 6.75 13.59 6.75 14V17.25H10C10.41 17.25 10.75 17.59 10.75 18C10.75 18.41 10.41 18.75 10 18.75Z" fill="#292D32"/>
-              <path d="M17.9999 18.75C17.8099 18.75 17.6199 18.68 17.4699 18.53L5.46994 6.53C5.17994 6.24 5.17994 5.76 5.46994 5.47C5.75994 5.18 6.23994 5.18 6.52994 5.47L18.5299 17.47C18.8199 17.76 18.8199 18.24 18.5299 18.53C18.3799 18.68 18.1899 18.75 17.9999 18.75Z" fill="#292D32"/>
-              <path d="M6 10.75C5.59 10.75 5.25 10.41 5.25 10V6C5.25 5.59 5.59 5.25 6 5.25H10C10.41 5.25 10.75 5.59 10.75 6C10.75 6.41 10.41 6.75 10 6.75H6.75V10C6.75 10.41 6.41 10.75 6 10.75Z" fill="#292D32"/>
-              <path d="M18 18.75H14C13.59 18.75 13.25 18.41 13.25 18C13.25 17.59 13.59 17.25 14 17.25H17.25V14C17.25 13.59 17.59 13.25 18 13.25C18.41 13.25 18.75 13.59 18.75 14V18C18.75 18.41 18.41 18.75 18 18.75Z" fill="#292D32"/>
-            </svg>
+        
 
           </div>                    
           
@@ -428,23 +412,38 @@ function convertTextToAudio(text) {
 }
 
 
-async function loadPlay() {
-    var buttons = document.getElementsByClassName("Load_play");
-
-    for (let i = 0; i < buttons.length; i++) {
-        const button = buttons[i];
-        button.addEventListener("click", async (e) => {
-            var element = e.target;
-            document.getElementsByClassName("loading_data")[0].classList.remove("hid")
-            
-            var parent = element.parentElement.parentElement.parentElement;
-            var name = parent.getElementsByClassName("name")[0].innerHTML;
-            var summary = parent.getElementsByClassName("hid")[1].innerHTML;
-            var id=parent.getElementsByClassName("hid")[0].innerHTML;
-                const generatedSummary = await generateSummary(summary);
-                const audioUrl = await convertTextToAudio(generatedSummary.choices[0].message.content.replace(/"/g, ''));
-                populateCont(name,generatedSummary.choices[0].message.content.replace(/"/g, ''),id,audioUrl)
+function loadSelect() {
+    var emails = document.getElementsByClassName("email");
+    for (let i = 0; i < emails.length; i++) {
+        const element = emails[i];
+        element.addEventListener("click", () => {
+            if (Math.floor(document.getElementsByClassName("number_of_selected")[0].innerHTML) < 11) {
+                document.getElementsByClassName("popup_play")[0].classList.toggle("popup_play"); // Toggle a different class for popup_play
+                element.classList.toggle("selected");
+                document.getElementsByClassName("number_of_selected")[0].innerHTML = document.getElementsByClassName("selected").length;
+            }
         });
+    }
+}
+
+async function playSelected() {
+    var name = "email Pod Cast";
+    var summary = "";
+    try {
+        document.getElementsByClassName("loading_data")[0].classList.remove("hid");
+        var emails = document.getElementsByClassName("selected");
+        for (let i = 0; i < emails.length; i++) {
+            const element = emails[i];
+            summary += element.getElementsByClassName("hid")[1].innerHTML;
+        }
+
+        const generatedSummary = await generateSummary(summary);
+        const audioUrl = await convertTextToAudio(generatedSummary.choices[0].message.content.replace(/"/g, ''));
+        populateCont(name, generatedSummary.choices[0].message.content.replace(/"/g, ''), "no id for this as it is selected by time", audioUrl);
+    } catch (error) {
+        console.error('Error:', error);
+    } finally {
+        document.getElementsByClassName("loading_data")[0].classList.add("hid"); // Hide loading indicator
     }
 }
 
@@ -472,11 +471,13 @@ function populateCont(name,detail,id,audioUrl){
    <div class="link">
       <h1>${id === "no id for this as it is selected by time"?id:winUrl+"/a_page_detail.html?r="+id}</h1>
       <div class="copy">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M16.5002 18.25H14.9902C14.5802 18.25 14.2402 17.91 14.2402 17.5C14.2402 17.09 14.5802 16.75 14.9902 16.75H16.5002C19.1202 16.75 21.2502 14.62 21.2502 12C21.2502 9.38 19.1202 7.25 16.5002 7.25H15.0002C14.5902 7.25 14.2502 6.91 14.2502 6.5C14.2502 6.09 14.5802 5.75 15.0002 5.75H16.5002C19.9502 5.75 22.7502 8.55 22.7502 12C22.7502 15.45 19.9502 18.25 16.5002 18.25Z" fill="white"/>
-            <path d="M9 18.25H7.5C4.05 18.25 1.25 15.45 1.25 12C1.25 8.55 4.05 5.75 7.5 5.75H9C9.41 5.75 9.75 6.09 9.75 6.5C9.75 6.91 9.41 7.25 9 7.25H7.5C4.88 7.25 2.75 9.38 2.75 12C2.75 14.62 4.88 16.75 7.5 16.75H9C9.41 16.75 9.75 17.09 9.75 17.5C9.75 17.91 9.41 18.25 9 18.25Z" fill="white"/>
-            <path d="M16 12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z" fill="white"/>
-          </svg>
+      <a href="${audioUrl}" download>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M16.5002 18.25H14.9902C14.5802 18.25 14.2402 17.91 14.2402 17.5C14.2402 17.09 14.5802 16.75 14.9902 16.75H16.5002C19.1202 16.75 21.2502 14.62 21.2502 12C21.2502 9.38 19.1202 7.25 16.5002 7.25H15.0002C14.5902 7.25 14.2502 6.91 14.2502 6.5C14.2502 6.09 14.5802 5.75 15.0002 5.75H16.5002C19.9502 5.75 22.7502 8.55 22.7502 12C22.7502 15.45 19.9502 18.25 16.5002 18.25Z" fill="white"/>
+          <path d="M9 18.25H7.5C4.05 18.25 1.25 15.45 1.25 12C1.25 8.55 4.05 5.75 7.5 5.75H9C9.41 5.75 9.75 6.09 9.75 6.5C9.75 6.91 9.41 7.25 9 7.25H7.5C4.88 7.25 2.75 9.38 2.75 12C2.75 14.62 4.88 16.75 7.5 16.75H9C9.41 16.75 9.75 17.09 9.75 17.5C9.75 17.91 9.41 18.25 9 18.25Z" fill="white"/>
+          <path d="M16 12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z" fill="white"/>
+        </svg>
+      </a>
       </div>
    </div>
    <div class="play">
