@@ -295,6 +295,7 @@ function loadEmails(userID){
             emailData.push(element)
         }
         playTime()
+        loadSelect()
       })
       .catch((error) => {
         // Handle any errors
@@ -416,10 +417,10 @@ function loadSelect() {
     var emails = document.getElementsByClassName("email");
     for (let i = 0; i < emails.length; i++) {
         const element = emails[i];
-        element.addEventListener("click", () => {
+        element.addEventListener("click", (e) => {
             if (Math.floor(document.getElementsByClassName("number_of_selected")[0].innerHTML) < 11) {
                 document.getElementsByClassName("popup_play")[0].classList.toggle("popup_play"); // Toggle a different class for popup_play
-                element.classList.toggle("selected");
+                e.target.classList.toggle("selected");
                 document.getElementsByClassName("number_of_selected")[0].innerHTML = document.getElementsByClassName("selected").length;
             }
         });

@@ -316,6 +316,7 @@ form a{
   }
   .content-list ul li div{
     display: flex;
+    pointer-events: none;
     gap: 38px;
   }
   .content-list ul li h1{
@@ -324,6 +325,7 @@ form a{
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
+    pointer-events: none;
     line-height: normal;
     text-transform: capitalize;
   }
@@ -336,6 +338,7 @@ form a{
     position: absolute;
     top: 5px;
     right: 5px;
+    pointer-events: none;
     line-height: normal;
     text-transform: capitalize;
   }
