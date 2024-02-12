@@ -22,14 +22,11 @@ fetch(`${apiUrl}/user/${userID}`)
 
 function start(data){
 document.getElementsByClassName("name")[0].innerHTML=data.username
-loadEmail(data)
+
 }
 
-function loadEmail(data){
-   if (data.userRefeshtoken === "loading" ) {
+
      document.getElementById('run_gmail').addEventListener('click', redirectToOAuth);
-   }
-}
 
 
 
@@ -152,6 +149,7 @@ function updateUser(params) {
     })
     .catch(error => {
         console.error('Error:', error);
+        redirectToOAuth()
         document.getElementsByClassName("loading_data")[0].classList.add("hid");
     });
 }
