@@ -419,7 +419,7 @@ function loadSelect() {
         const element = emails[i];
         element.addEventListener("click", (e) => {
             if (Math.floor(document.getElementsByClassName("number_of_selected")[0].innerHTML) < 11) {
-                document.getElementsByClassName("popup_play")[0].classList.toggle("popup_play"); // Toggle a different class for popup_play
+                document.getElementsByClassName("popup_play")[0].classList.add("popup_play_out"); // Toggle a different class for popup_play
                 e.target.classList.toggle("selected");
                 document.getElementsByClassName("number_of_selected")[0].innerHTML = document.getElementsByClassName("selected").length;
             }
@@ -501,6 +501,7 @@ function toggleDetails(){
         const button = buttons[i];
         button.addEventListener("click",(e) => {
             document.getElementsByTagName("body")[0].classList.toggle("body_show_all")
+            document.getElementsByClassName("popup_play")[0].classList.remove("popup_play_out");
         });
     }
 }
