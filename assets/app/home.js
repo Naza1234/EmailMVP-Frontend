@@ -109,7 +109,7 @@ if (code) {
         .catch(error => console.error('Error:', error));
     
 } else {
-  
+    redirectToOAuth()
 }
 
 
